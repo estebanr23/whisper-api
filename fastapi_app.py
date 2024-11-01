@@ -26,6 +26,7 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 @app.post("/whisper/")
 async def handler(files: List[UploadFile] = File(...), form_format: str = Form(...)):
+    print('Entro al endpoint')
     if not files:
         raise HTTPException(status_code=400, detail="No se proporcionaron archivos")
 
@@ -54,6 +55,7 @@ async def handler(files: List[UploadFile] = File(...), form_format: str = Form(.
                 'transcript': formatted_response,
             })
 
+    print(results)
     return JSONResponse(content={'results': results})
 
 async def process_and_format_text(text: str, form_format: dict) -> dict:
